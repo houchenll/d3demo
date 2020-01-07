@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mine</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+    <script type="module">
+        console.log("script module begin, start import... ");
+
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "./index.js";
+
+        console.log("start create runtime and main");
+        const runtime = new Runtime();
+        const main = runtime.module(define, Inspector.into(document.body));
+        console.log("after create runtime and main");
+
+    </script>
+
+</body>
+</html>
