@@ -1,7 +1,7 @@
 export default function define(runtime, observer) {
     const main = runtime.module();
 
-    main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width", "world_simplified", "projection", "topojson"], function(d3, DOM, dataset, width, world_simplified, projection, topojson) {
+    main.variable(observer("chart")).define("chart", ["d3", "DOM", "width", "world_simplified", "projection", "topojson"], function(d3, DOM, width, world_simplified, projection, topojson) {
         const height = 600;
         const svg = d3.select(DOM.svg(width, height));
         console.log(`enter chart, width ${width}, svg is ${svg}, DOM is ${DOM}, d3 is ${d3}`);
@@ -104,11 +104,11 @@ export default function define(runtime, observer) {
             )
     });
 
-    main.variable(observer("dataset")).define("dataset", ["d3"], function(d3) {
-        return(
-            d3.csv('https://gist.githubusercontent.com/johnburnmurdoch/4199dbe55095c3e13de8d5b2e5e5307a/raw/fa018b25c24b7b5f47fd0568937ff6c04e384786/city_populations')
-        )
-    });
+    // main.variable(observer("dataset")).define("dataset", ["d3"], function(d3) {
+    //     return(
+    //         d3.csv('https://gist.githubusercontent.com/johnburnmurdoch/4199dbe55095c3e13de8d5b2e5e5307a/raw/fa018b25c24b7b5f47fd0568937ff6c04e384786/city_populations')
+    //     )
+    // });
 
     // 世界地图坐标数据
     main.variable(observer("world")).define("world", ["d3"], function(d3) {
