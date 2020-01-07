@@ -29,12 +29,10 @@ export default function define(runtime, observer) {
         // console.log(mapLegend);
         mapLegend
             .append('rect')
-            .attrs({
-                x: 0,
-                y: 0,
-                width: 1000,
-                height: 800
-            })
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 1000)
+            .attr('height', 800)
             .styles({
                 fill: '#ff0000',
                 stroke: '#dddddd'
