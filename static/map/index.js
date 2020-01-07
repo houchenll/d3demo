@@ -16,17 +16,17 @@ export default function define(runtime, observer) {
 
         // const path = d3.geoPath().projection(projection);
 
-        let mapLegend1 = svg.append('g')
+        let mapLegend = svg.append('g')
             .attr('class', 'map-legend')
             .attr('transform', 'translate(10, 10)');
-        console.log(mapLegend1);
-
-        let mapLegend = svg.append('g')
-            .attrs({
-                class: 'map-legend',
-                transform: 'translate(10, 10)'
-            });
         console.log(mapLegend);
+
+        // let mapLegend = svg.append('g')
+        //     .attrs({
+        //         class: 'map-legend',
+        //         transform: 'translate(10, 10)'
+        //     });
+        // console.log(mapLegend);
         mapLegend
             .append('rect')
             .attrs({
