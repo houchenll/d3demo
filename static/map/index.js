@@ -32,8 +32,8 @@ export default function define(runtime, observer) {
                 height: 400
             })
             .styles({
-                fill: '#ff0000',
-                stroke: '#dddddd'
+                fill: '#efefff',
+                stroke: '#999999'
             });
 
         console.log(`chart width ${width}, height ${height}, mapLegend is ${mapLegend}`);
