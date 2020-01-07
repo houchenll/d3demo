@@ -3,7 +3,7 @@ export default function define(runtime, observer) {
 
     // main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width", "world_simplified", "projection", "topojson"], function(d3, DOM, dataset, width, world_simplified, projection, topojson) {
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "width"], function(d3, DOM, width) {
-        const height = 1000;
+        const height = 600;
         const svg = d3.select(DOM.svg(width, height));
         console.log(`enter chart, width ${width}, svg is ${svg}, DOM is ${DOM}, d3 is ${d3}`);
 
@@ -28,8 +28,8 @@ export default function define(runtime, observer) {
             .attrs({
                 x: 0,
                 y: 0,
-                width: 1000,
-                height: 800
+                width: 600,
+                height: 400
             })
             .styles({
                 fill: '#ff0000',
