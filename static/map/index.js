@@ -17,22 +17,20 @@ export default function define(runtime, observer) {
         // const path = d3.geoPath().projection(projection);
 
         let mapLegend = svg.append('g')
-            .attr('class', 'map-legend')
-            .attr('transform', 'translate(10, 10)');
+            .attrs({
+                class: 'map-legend',
+                transform: 'translate(10, 10)'
+            });
         console.log(mapLegend);
 
-        // let mapLegend = svg.append('g')
-        //     .attrs({
-        //         class: 'map-legend',
-        //         transform: 'translate(10, 10)'
-        //     });
-        // console.log(mapLegend);
         mapLegend
             .append('rect')
-            .attr('x', 0)
-            .attr('y', 0)
-            .attr('width', 1000)
-            .attr('height', 800)
+            .attrs({
+                x: 0,
+                y: 0,
+                width: 1000,
+                height: 800
+            })
             .styles({
                 fill: '#ff0000',
                 stroke: '#dddddd'
@@ -97,6 +95,14 @@ export default function define(runtime, observer) {
         //     });
 
         return svg.node();
+    });
+
+    // 必须执行这个，否则attrs()等函数会找不到
+    main.variable(observer("d3")).define("d3", ["require"], function(require) {
+        console.log("d3 observer")
+        return(
+            require('d3-scale','d3-array','d3-fetch','d3-selection','d3-timer','d3-color','d3-format','d3-ease','d3-interpolate','d3-axis', 'd3-geo', 'd3-selection-multi')
+            )
     });
 
     // main.variable(observer("dataset")).define("dataset", ["d3"], function(d3) {
