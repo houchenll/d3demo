@@ -3,9 +3,9 @@ export default function define(runtime, observer) {
 
     // main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width", "world_simplified", "projection", "topojson"], function(d3, DOM, dataset, width, world_simplified, projection, topojson) {
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "width"], function(d3, DOM, width) {
-        console.log('enter chart')
         const height = 1000;
         const svg = d3.select(DOM.svg(width, height));
+        console.log(`enter chart, width ${width}, svg is ${svg}, DOM is ${DOM}, d3 is ${d3}`);
 
         // let colourScale = d3.scaleOrdinal()
             // .range(["#adb0ff", "#ffb3ff", "#90d595", "#e48381", "#aafbff", "#f7bb5f", "#eafb50"])
@@ -21,7 +21,6 @@ export default function define(runtime, observer) {
                 class: 'map-legend',
                 transform: `translate(10, 10)`
             });
-
         mapLegend
             .append('rect')
             .attrs({
