@@ -137,27 +137,20 @@ export default function define(runtime, observer) {
                     .sort((a,b) => b.value - a.value)
                     .slice(0,top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
-                console.log(monthSlice);
 
-
-                // 重置 x 区间
                 x.domain([0, d3.max(monthSlice, d => d.value)]);
 
-
-                // 绘制 bar
                 let bars = svg.selectAll('.bar').data(monthSlice, d => d.name);
 
-                // bar 从表格外加入表格，初始显示在表格外，使用动画显示到它应显示的位置
-                // ease 后的attr 表格希望动画后rect的属性
-                bars.enter()
+                bars
+                    .enter()
                     .append('rect')
                     .attrs({
-                        // 空格换为下划线
-                        class: d => `bar ${d.name.replace(/\s/g,'_')}`,
-                        x: x(0)+1,
-                        width: d => x(d.value)-x(0)-1,
-                        y: d => y(top_n+1)+5,
-                        height: y(1)-y(0)-barPadding
+                      class: d => `bar ${d.name.replace(/\s/g,'_')}`,
+                      x: x(0)+1,
+                      width: d => x(d.value)-x(0)-1,
+                      y: d => y(top_n+1)+5,
+                      height: y(1)-y(0)-barPadding
                     })
                     .styles({
                         fill: d => colourScale(d.area)
@@ -165,11 +158,10 @@ export default function define(runtime, observer) {
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
-                    .attr({
-                        y: d => y(d.rank) + 5
+                    .attrs({
+                        y: d => y(d.rank)+5
                     });
 
-                // 表格中已存在的bar，在数据变化后，变更它的width和y，使用动画移动它的位置
                 bars
                     .transition()
                     .duration(tickDuration)
@@ -179,7 +171,6 @@ export default function define(runtime, observer) {
                         y: d => y(d.rank)+5
                     });
 
-                // 因数据变化，需要移出表格的bar，指定它需要变化到的width和y，然后使用动画移动
                 bars
                     .exit()
                     .transition()
@@ -190,8 +181,6 @@ export default function define(runtime, observer) {
                         y: d => y(top_n+1)+5
                     })
                     .remove();
-
-
 
                 let labels = svg.selectAll('.label').data(monthSlice, d => d.name);
 
@@ -222,7 +211,6 @@ export default function define(runtime, observer) {
                         dy: (d,i) => i*16
                     })
                     .styles({
-                        // opacity: d => d.opacity,
                         fill: d => d.weight == 400 ? '#444444':'',
                         'font-weight': d => d.weight,
                         'font-size': d => d.weight == 400 ? '12px':''
@@ -235,7 +223,6 @@ export default function define(runtime, observer) {
                         dy: (d,i) => i*16
                     })
                     .styles({
-                        // opacity: d => d.opacity,
                         fill: d => d.weight == 400 ? '#444444':'',
                         'font-weight': d => d.weight,
                         'font-size': d => d.weight == 400 ? '12px':''
