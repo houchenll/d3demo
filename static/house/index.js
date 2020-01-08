@@ -72,30 +72,30 @@ export default function define(runtime, observer) {
             });
 
         // 显示 bar 上的数据
-        svg.selectAll('text.label')
-            .data(monthSlice, d => d.name)
-            .enter()
-            .append('text')
-            .attrs({
-              class: 'label',
-              transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`,
-              'text-anchor': 'end'
-            })
-            .selectAll('tspan')
-            .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}])
-            .enter()
-            .append('tspan')
-            .attrs({
-              x: 0,
-              dy: (d,i) => i*16
-            })
-            .styles({
-              // opacity: d => d.opacity,
-              fill: d => d.weight == 400 ? '#444444':'',
-              'font-weight': d => d.weight,
-              'font-size': d => d.weight == 400 ? '12px':''
-            })
-            .html(d => d.text);
+        // svg.selectAll('text.label')
+        //     .data(monthSlice, d => d.name)
+        //     .enter()
+        //     .append('text')
+        //     .attrs({
+        //       class: 'label',
+        //       transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`,
+        //       'text-anchor': 'end'
+        //     })
+        //     .selectAll('tspan')
+        //     .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}])
+        //     .enter()
+        //     .append('tspan')
+        //     .attrs({
+        //       x: 0,
+        //       dy: (d,i) => i*16
+        //     })
+        //     .styles({
+        //       // opacity: d => d.opacity,
+        //       fill: d => d.weight == 400 ? '#444444':'',
+        //       'font-weight': d => d.weight,
+        //       'font-size': d => d.weight == 400 ? '12px':''
+        //     })
+        //     .html(d => d.text);
           
         svg.selectAll('text.valueLabel')
             .data(monthSlice, d => d.name)
@@ -194,7 +194,7 @@ export default function define(runtime, observer) {
                         // transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
                         'text-anchor': 'end'
                     })
-                    .html('')
+                    .html(d => d.name_zh)
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
@@ -207,35 +207,35 @@ export default function define(runtime, observer) {
                         // transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
                     });
 
-                let tspans = labels.selectAll('tspan')
-                    .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}]);
+                // let tspans = labels.selectAll('tspan')
+                //     .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}]);
 
-                tspans.enter()
-                    .append('tspan')
-                    .html(d => d.text)
-                    .attrs({
-                        x: 0,
-                        dy: (d,i) => i*16
-                    })
-                    .styles({
-                        fill: d => d.weight == 400 ? '#444444':'',
-                        'font-weight': d => d.weight,
-                        'font-size': d => d.weight == 400 ? '12px':''
-                    });
+                // tspans.enter()
+                //     .append('tspan')
+                //     .html(d => d.text)
+                //     .attrs({
+                //         x: 0,
+                //         dy: (d,i) => i*16
+                //     })
+                //     .styles({
+                //         fill: d => d.weight == 400 ? '#444444':'',
+                //         'font-weight': d => d.weight,
+                //         'font-size': d => d.weight == 400 ? '12px':''
+                //     });
 
-                tspans
-                    .html(d => d.text)
-                    .attrs({
-                        x: 0,
-                        dy: (d,i) => i*16
-                    })
-                    .styles({
-                        fill: d => d.weight == 400 ? '#444444':'',
-                        'font-weight': d => d.weight,
-                        'font-size': d => d.weight == 400 ? '12px':''
-                    });
+                // tspans
+                //     .html(d => d.text)
+                //     .attrs({
+                //         x: 0,
+                //         dy: (d,i) => i*16
+                //     })
+                //     .styles({
+                //         fill: d => d.weight == 400 ? '#444444':'',
+                //         'font-weight': d => d.weight,
+                //         'font-size': d => d.weight == 400 ? '12px':''
+                //     });
 
-                tspans.exit().remove();
+                // tspans.exit().remove();
 
                 labels
                     .transition()
