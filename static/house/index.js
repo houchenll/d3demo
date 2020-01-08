@@ -18,6 +18,7 @@ export default function define(runtime, observer) {
         const height = 600;
         const top_n = 10;
         const month = 201912;
+        const tickDuration = 1000;
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -43,6 +44,35 @@ export default function define(runtime, observer) {
             .slice(0,top_n);
         monthSlice.forEach((d,i) => d.rank = i);
         console.log(monthSlice);
+
+
+        // 循环查询数据
+        d3.timeout(_ => {
+            console.log('3000 timeout');
+
+            let ticker = d3.interval(e => {
+                console.log(`ticker come, month ${month}`);
+
+                monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
+                    .sort((a,b) => b.value - a.value)
+                    .slice(0,top_n);
+                monthSlice.forEach((d,i) => d.rank = i);
+                console.log(monthSlice);
+
+
+                if (month == 201101) ticker.stop();    // 2018 == endYear
+                
+                var year = parseInt(month / 100);
+                var mon = month % 100;
+                if (mon == 1) {
+                    year = year - 1;
+                    month = year * 100 + 12;
+                } else {
+                    month = month -1;
+                }
+
+            }, tickDuration);
+        }, 3000);
 
         let title = svg.append('text')
             .attrs({
