@@ -47,6 +47,32 @@ export default function define(runtime, observer) {
         console.log(monthSlice);
 
 
+        let x = d3.scaleLinear()
+            .domain([0, d3.max(monthSlice, d => d.value)])
+            .range([margin.left, width-margin.right-65]);
+
+        let y = d3.scaleLinear()
+            .domain([top_n, 0])
+            .range([height-margin.bottom, margin.top]);
+
+
+        // 绘制 bar
+        svg.selectAll('rect.bar')
+            .data(monthSlice, d => d.name)
+            .enter()
+            .append('rect')
+            .attrs({
+                class: 'bar',
+                x: x(0)+1,
+                width: d => x(d.value)-x(0)-1,
+                y: d => y(d.rank)+5,
+                height: y(1)-y(0)-barPadding
+            })
+            .styles({
+                fill: d => "#adb0ff"
+            });
+
+
         // 循环查询数据
         d3.timeout(_ => {
             console.log('3000 timeout');
@@ -59,6 +85,58 @@ export default function define(runtime, observer) {
                     .slice(0,top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
                 console.log(monthSlice);
+
+
+                // 重置 x 区间
+                x.domain([0, d3.max(monthSlice, d => d.value)]);
+
+
+                // 绘制 bar
+                let bars = svg.selectAll('.bar').data(monthSlice, d => d.name);
+
+                // bar 从表格外加入表格，初始显示在表格外，使用动画显示到它应显示的位置
+                // ease 后的attr 表格希望动画后rect的属性
+                bars.enter()
+                    .append('rect')
+                    .attrs({
+                        // 空格换为下划线
+                        class: d => `bar ${d.name.replace(/\s/g,'_')}`,
+                        x: x(0)+1,
+                        width: d => x(d.value)-x(0)-1,
+                        y: d => y(top_n+1)+5,
+                        height: y(1)-y(0)-barPadding
+                    })
+                    .styles({
+                        fill: d => "#adb0ff"
+                    })
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr({
+                        y: d => y(d.rank) + 5
+                    });
+
+                // 表格中已存在的bar，在数据变化后，变更它的width和y，使用动画移动它的位置
+                bars
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        width: d => x(d.value)-x(0)-1,
+                        y: d => y(d.rank)+5
+                    });
+
+                // 因数据变化，需要移出表格的bar，指定它需要变化到的width和y，然后使用动画移动
+                bars
+                    .exit()
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        width: d => x(d.value)-x(0)-1,
+                        y: d => y(top_n+1)+5
+                    })
+                    .remove();
 
 
                 if (month == 201101) ticker.stop();    // 2018 == endYear
