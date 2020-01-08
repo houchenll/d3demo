@@ -15,7 +15,7 @@ export default function define(runtime, observer) {
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
         console.log(`chart observer, width ${width}, dataset is:`);
 
-        const height = 800;
+        const height = 900;
         const top_n = 15;
         const tickDuration = 2000;
 
