@@ -114,6 +114,17 @@ export default function define(runtime, observer) {
             })
             .text(d => d3.format(',')(d.lastValue));
 
+        let monthText = svg.append('text')
+            .attrs({
+              class: 'monthText',
+              x: width-225,
+              y: height-45
+            })
+            // .styles({
+            //   'text-anchor': 'end'
+            // })
+            .html(~~month);
+
 
         // 循环查询数据
         d3.timeout(_ => {
@@ -293,6 +304,8 @@ export default function define(runtime, observer) {
                     })
                     .remove();
 
+                monthText.html(~~month);
+
 
                 if (month == 201912) ticker.stop();
 
@@ -339,7 +352,7 @@ export default function define(runtime, observer) {
               font-size: 14px;
               fill: #999999;
             }
-            text.yearText{
+            text.monthText{
               font-size: 96px;
               font-weight: 700;
               fill: #cccccc;
