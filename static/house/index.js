@@ -117,8 +117,8 @@ export default function define(runtime, observer) {
         let monthText = svg.append('text')
             .attrs({
               class: 'monthText',
-              x: width-225,
-              y: height-45
+              x: width-300,
+              y: height-35
             })
             // .styles({
             //   'text-anchor': 'end'
@@ -353,7 +353,7 @@ export default function define(runtime, observer) {
               fill: #999999;
             }
             text.monthText{
-              font-size: 96px;
+              font-size: 80px;
               font-weight: 700;
               fill: #cccccc;
             }
