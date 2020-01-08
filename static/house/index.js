@@ -17,7 +17,7 @@ export default function define(runtime, observer) {
 
         const height = 600;
         const top_n = 10;
-        const tickDuration = 1000;
+        const tickDuration = 500;
 
         let month = 201101;
 
@@ -116,7 +116,7 @@ export default function define(runtime, observer) {
 
         // 循环查询数据
         d3.timeout(_ => {
-            console.log('3000 timeout');
+            console.log('2000 timeout');
 
             let ticker = d3.interval(e => {
                 console.log(`ticker come, month ${month}`);
@@ -295,9 +295,9 @@ export default function define(runtime, observer) {
 
                 if (month == 201912) ticker.stop();
 
-                year = parseInt(month / 100);
-                value = month % 100;
-                if (value == 12) {
+                var year = parseInt(month / 100);
+                var mon = month % 100;
+                if (mon == 12) {
                     year = year + 1;
                     month = year * 100 + 1;
                 } else {
@@ -305,7 +305,7 @@ export default function define(runtime, observer) {
                 }
 
             }, tickDuration);
-        }, 3000);
+        }, 2000);
 
         let title = svg.append('text')
             .attrs({
