@@ -19,7 +19,7 @@ export default function define(runtime, observer) {
         const top_n = 10;
         const tickDuration = 1000;
 
-        let month = 201912;
+        let month = 201101;
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -55,6 +55,10 @@ export default function define(runtime, observer) {
             .domain([top_n, 0])
             .range([height-margin.bottom, margin.top]);
 
+        let colourScale = d3.scaleOrdinal()
+            .range(["#adb0ff", "#ffb3ff", "#90d595", "#e48381", "#aafbff", "#f7bb5f", "#eafb50"])
+            .domain(["Dongbei","Xibei","Xinan","Huabei","Huadong","Huazhong","Huanan"]);
+
 
         // 绘制 bar
         svg.selectAll('rect.bar')
@@ -69,8 +73,45 @@ export default function define(runtime, observer) {
                 height: y(1)-y(0)-barPadding
             })
             .styles({
-                fill: d => "#adb0ff"
+                fill: d => colourScale(d.area)
             });
+
+        // 显示 bar 上的数据
+        svg.selectAll('text.label')
+            .data(yearSlice, d => d.name)
+            .enter()
+            .append('text')
+            .attrs({
+              class: 'label',
+              transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`,
+              'text-anchor': 'end'
+            })
+            .selectAll('tspan')
+            .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}])
+            .enter()
+            .append('tspan')
+            .attrs({
+              x: 0,
+              dy: (d,i) => i*16
+            })
+            .styles({
+              // opacity: d => d.opacity,
+              fill: d => d.weight == 400 ? '#444444':'',
+              'font-weight': d => d.weight,
+              'font-size': d => d.weight == 400 ? '12px':''
+            })
+            .html(d => d.text);
+          
+        svg.selectAll('text.valueLabel')
+            .data(yearSlice, d => d.name)
+            .enter()
+            .append('text')
+            .attrs({
+              class: 'valueLabel',
+              x: d => x(d.value)+5,
+              y: d => y(d.rank)+5+((y(1)-y(0))/2)+1,
+            })
+            .text(d => d3.format(',')(d.value));
 
 
         // 循环查询数据
@@ -139,15 +180,128 @@ export default function define(runtime, observer) {
                     .remove();
 
 
-                if (month == 201101) ticker.stop();    // 2018 == endYear
-                
-                var year = parseInt(month / 100);
-                var mon = month % 100;
-                if (mon == 1) {
-                    year = year - 1;
-                    month = year * 100 + 12;
+                let labels = svg.selectAll('.label').data(monthSlice, d => d.name);
+
+                labels
+                    .enter()
+                    .append('text')
+                    .attrs({
+                        class: 'label',
+                        transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
+                        'text-anchor': 'end'
+                    })
+                    .html('')
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                    });
+
+                let tspans = labels.selectAll('tspan')
+                    .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}]);
+
+                tspans.enter()
+                    .append('tspan')
+                    .html(d => d.text)
+                    .attrs({
+                        x: 0,
+                        dy: (d,i) => i*16
+                    })
+                    .styles({
+                        // opacity: d => d.opacity,
+                        fill: d => d.weight == 400 ? '#444444':'',
+                        'font-weight': d => d.weight,
+                        'font-size': d => d.weight == 400 ? '12px':''
+                    });
+
+                tspans
+                    .html(d => d.text)
+                    .attrs({
+                        x: 0,
+                        dy: (d,i) => i*16
+                    })
+                    .styles({
+                        // opacity: d => d.opacity,
+                        fill: d => d.weight == 400 ? '#444444':'',
+                        'font-weight': d => d.weight,
+                        'font-size': d => d.weight == 400 ? '12px':''
+                    });
+
+                tspans.exit().remove();
+
+                labels
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                    });
+
+                labels
+                    .exit()
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
+                    })
+                    .remove();
+
+                let valueLabels = svg.selectAll('.valueLabel').data(monthSlice, d => d.name);
+
+                valueLabels
+                    .enter()
+                    .append('text')
+                    .attrs({
+                      class: 'valueLabel',
+                      x: d => x(d.value)+5,
+                      y: d => y(top_n+1)+5,
+                    })
+                    .text(d => d3.format(',.0f')(d.value))
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        y: d => y(d.rank)+5+((y(1)-y(0))/2)+1
+                    });
+
+                valueLabels
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        x: d => x(d.value)+5,
+                        y: d => y(d.rank)+5+((y(1)-y(0))/2)+1
+                    })
+                    .tween("text", function(d) {
+                        let i = d3.interpolateRound(d.value, d.value);
+                        return function(t) {
+                            this.textContent = d3.format(',')(i(t));
+                        };
+                    });
+
+                valueLabels
+                    .exit()
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attrs({
+                        x: d => x(d.value)+5,
+                        y: d => y(top_n+1)+5
+                    })
+                    .remove();
+
+
+                if (month == 201912) ticker.stop();
+
+                year = parseInt(month / 100);
+                value = month % 100;
+                if (value == 12) {
+                    year = year + 1;
+                    month = year * 100 + 1;
                 } else {
-                    month = month - 1;
+                    month = month + 1;
                 }
 
             }, tickDuration);
