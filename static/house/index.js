@@ -78,7 +78,7 @@ export default function define(runtime, observer) {
 
         // 显示 bar 上的数据
         svg.selectAll('text.label')
-            .data(yearSlice, d => d.name)
+            .data(monthSlice, d => d.name)
             .enter()
             .append('text')
             .attrs({
@@ -103,7 +103,7 @@ export default function define(runtime, observer) {
             .html(d => d.text);
           
         svg.selectAll('text.valueLabel')
-            .data(yearSlice, d => d.name)
+            .data(monthSlice, d => d.name)
             .enter()
             .append('text')
             .attrs({
