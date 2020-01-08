@@ -17,7 +17,7 @@ export default function define(runtime, observer) {
 
         const height = 800;
         const top_n = 15;
-        const tickDuration = 1000;
+        const tickDuration = 2000;
 
         let month = 201101;
 
@@ -149,7 +149,7 @@ export default function define(runtime, observer) {
                         height: y(1)-y(0)-barPadding
                     })
                     .styles({
-                        fill: d => "#adb0ff"
+                        fill: d => colourScale(d.group)
                     })
                     .transition()
                     .duration(tickDuration)
