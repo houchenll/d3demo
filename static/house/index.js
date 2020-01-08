@@ -15,9 +15,9 @@ export default function define(runtime, observer) {
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
         console.log(`chart observer, width ${width}, dataset is:`);
 
-        const height = 600;
-        const top_n = 10;
-        const tickDuration = 500;
+        const height = 800;
+        const top_n = 15;
+        const tickDuration = 1000;
 
         let month = 201101;
 
@@ -306,13 +306,6 @@ export default function define(runtime, observer) {
 
             }, tickDuration);
         }, 2000);
-
-        let title = svg.append('text')
-            .attrs({
-                class: 'title',
-                y: 24
-            })
-            .html('house price');
 
         return svg.node();
     });
