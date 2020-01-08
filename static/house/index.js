@@ -34,6 +34,7 @@ export default function define(runtime, observer) {
         // 处理数据
         dataset.forEach(d => {
             d.value = +d.value,
+            d.lastValue = +d.lastValue,
             d.value = isNaN(d.value) ? 0 : d.value,
             d.month = +d.month,
             d.colour = "#C8BDFF"
@@ -57,7 +58,7 @@ export default function define(runtime, observer) {
 
         let colourScale = d3.scaleOrdinal()
             .range(["#adb0ff", "#ffb3ff", "#90d595", "#e48381", "#aafbff", "#f7bb5f", "#eafb50"])
-            .domain(["Dongbei","Xibei","Xinan","Huabei","Huadong","Huazhong","Huanan"]);
+            .domain(["Huanan","Huazhong","Huadong","Xibei","Huabei","Xinan","Dongbei"]);
 
 
         // 绘制 bar
@@ -111,7 +112,7 @@ export default function define(runtime, observer) {
               x: d => x(d.value)+5,
               y: d => y(d.rank)+5+((y(1)-y(0))/2)+1,
             })
-            .text(d => d3.format(',')(d.value));
+            .text(d => d3.format(',')(d.lastValue));
 
 
         // 循环查询数据
@@ -258,7 +259,7 @@ export default function define(runtime, observer) {
                       x: d => x(d.value)+5,
                       y: d => y(top_n+1)+5,
                     })
-                    .text(d => d3.format(',.0f')(d.value))
+                    .text(d => d3.format(',.0f')(d.lastValue))
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
@@ -275,7 +276,7 @@ export default function define(runtime, observer) {
                         y: d => y(d.rank)+5+((y(1)-y(0))/2)+1
                     })
                     .tween("text", function(d) {
-                        let i = d3.interpolateRound(d.value, d.value);
+                        let i = d3.interpolateRound(d.lastValue, d.value);
                         return function(t) {
                             this.textContent = d3.format(',')(i(t));
                         };
