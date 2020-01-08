@@ -149,7 +149,7 @@ export default function define(runtime, observer) {
                         height: y(1)-y(0)-barPadding
                     })
                     .styles({
-                        fill: d => colourScale(d.group)
+                        fill: d => colourScale(d.area)
                     })
                     .transition()
                     .duration(tickDuration)
