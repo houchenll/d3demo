@@ -192,6 +192,7 @@ export default function define(runtime, observer) {
                     .remove();
 
 
+
                 let labels = svg.selectAll('.label').data(monthSlice, d => d.name);
 
                 labels
@@ -303,6 +304,7 @@ export default function define(runtime, observer) {
                         y: d => y(top_n+1)+5
                     })
                     .remove();
+
 
                 monthText.html(~~month);
 

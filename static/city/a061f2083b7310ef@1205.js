@@ -59,7 +59,7 @@ path.domain{
 </style>`
 )});
   main.variable(observer("tickDuration")).define("tickDuration", function(){return(
-250
+2500
 )});
   main.variable(observer("top_n")).define("top_n", function(){return(
 10
