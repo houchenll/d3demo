@@ -17,8 +17,9 @@ export default function define(runtime, observer) {
 
         const height = 600;
         const top_n = 10;
-        const month = 201912;
         const tickDuration = 1000;
+
+        let month = 201912;
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -68,7 +69,7 @@ export default function define(runtime, observer) {
                     year = year - 1;
                     month = year * 100 + 12;
                 } else {
-                    month = month -1;
+                    month = month - 1;
                 }
 
             }, tickDuration);
