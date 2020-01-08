@@ -1,15 +1,19 @@
 export default function define(runtime, observer) {
+    console.log("get const main");
     const main = runtime.module();
 
     main.variable(observer("d3")).define("d3", ["require"], function(require) {
+        console.log("d3 observer")
         return(require('d3-scale','d3-array','d3-fetch','d3-selection','d3-timer','d3-color','d3-format','d3-ease','d3-interpolate','d3-axis', 'd3-geo', 'd3-selection-multi'))
     });
 
     main.variable(observer("dataset")).define("dataset", ["d3"], function(d3) {
+        console.log("dataset observer");
         return(d3.csv('dataset.csv'))
     });
 
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
+        console.log(`chart observer, width ${width}, dataset is:`);
 
         const height = 600;
         const top_n = 10;
@@ -35,11 +39,13 @@ export default function define(runtime, observer) {
             d.month = +d.month,
             d.colour = "#C8BDFF"
         });
+        console.log(dataset);
 
         let monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
             .sort((a,b) => b.value - a.value)
             .slice(0,top_n);
         monthSlice.forEach((d,i) => d.rank = i);
+        console.log(monthSlice);
 
 
         let x = d3.scaleLinear()
@@ -72,30 +78,30 @@ export default function define(runtime, observer) {
             });
 
         // 显示 bar 上的数据
-        // svg.selectAll('text.label')
-        //     .data(monthSlice, d => d.name)
-        //     .enter()
-        //     .append('text')
-        //     .attrs({
-        //       class: 'label',
-        //       transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`,
-        //       'text-anchor': 'end'
-        //     })
-        //     .selectAll('tspan')
-        //     .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}])
-        //     .enter()
-        //     .append('tspan')
-        //     .attrs({
-        //       x: 0,
-        //       dy: (d,i) => i*16
-        //     })
-        //     .styles({
-        //       // opacity: d => d.opacity,
-        //       fill: d => d.weight == 400 ? '#444444':'',
-        //       'font-weight': d => d.weight,
-        //       'font-size': d => d.weight == 400 ? '12px':''
-        //     })
-        //     .html(d => d.text);
+        svg.selectAll('text.label')
+            .data(monthSlice, d => d.name)
+            .enter()
+            .append('text')
+            .attrs({
+              class: 'label',
+              transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`,
+              'text-anchor': 'end'
+            })
+            .selectAll('tspan')
+            .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}])
+            .enter()
+            .append('tspan')
+            .attrs({
+              x: 0,
+              dy: (d,i) => i*16
+            })
+            .styles({
+              // opacity: d => d.opacity,
+              fill: d => d.weight == 400 ? '#444444':'',
+              'font-weight': d => d.weight,
+              'font-size': d => d.weight == 400 ? '12px':''
+            })
+            .html(d => d.text);
           
         svg.selectAll('text.valueLabel')
             .data(monthSlice, d => d.name)
@@ -122,8 +128,10 @@ export default function define(runtime, observer) {
 
         // 循环查询数据
         d3.timeout(_ => {
+            console.log('2000 timeout');
 
             let ticker = d3.interval(e => {
+                console.log(`ticker come, month ${month}`);
 
                 monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
                     .sort((a,b) => b.value - a.value)
@@ -181,78 +189,53 @@ export default function define(runtime, observer) {
                     .append('text')
                     .attrs({
                         class: 'label',
-                        x: function(d) {
-                            var val = x(d.value) - 5;
-                            console.log(`label enter, before anim x ${val}`);
-                        },
-                        y: function(d) {
-                            var val = y(top_n+1)+5+((y(1)-y(0))/2)-8;
-                            console.log(`label enter, before anim y ${val}`);
-                        },
-                        // x: d => x(d.value)-5,
-                        // y: d => y(top_n+1)+5+((y(1)-y(0))/2)-8,
-                        // transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
+                        transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
                         'text-anchor': 'end'
                     })
-                    .html(d => d.name_zh)
+                    .html('')
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        y: function(d) {
-                            var val = y(d.rank)+5+((y(1)-y(0))/2)-8;
-                            console.log(`label enter, after anim y ${val}`);
-                        }
-                        // y: d => y(d.rank)+5+((y(1)-y(0))/2)-8
-                        // transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
                     });
 
-                // let tspans = labels.selectAll('tspan')
-                //     .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}]);
+                let tspans = labels.selectAll('tspan')
+                    .data(d => [{text: d.name_zh, opacity: 1, weight:600}, {text: d.area_zh, opacity: 1, weight:400}]);
 
-                // tspans.enter()
-                //     .append('tspan')
-                //     .html(d => d.text)
-                //     .attrs({
-                //         x: 0,
-                //         dy: (d,i) => i*16
-                //     })
-                //     .styles({
-                //         fill: d => d.weight == 400 ? '#444444':'',
-                //         'font-weight': d => d.weight,
-                //         'font-size': d => d.weight == 400 ? '12px':''
-                //     });
+                tspans.enter()
+                    .append('tspan')
+                    .html(d => d.text)
+                    .attrs({
+                        x: 0,
+                        dy: (d,i) => i*16
+                    })
+                    .styles({
+                        fill: d => d.weight == 400 ? '#444444':'',
+                        'font-weight': d => d.weight,
+                        'font-size': d => d.weight == 400 ? '12px':''
+                    });
 
-                // tspans
-                //     .html(d => d.text)
-                //     .attrs({
-                //         x: 0,
-                //         dy: (d,i) => i*16
-                //     })
-                //     .styles({
-                //         fill: d => d.weight == 400 ? '#444444':'',
-                //         'font-weight': d => d.weight,
-                //         'font-size': d => d.weight == 400 ? '12px':''
-                //     });
+                tspans
+                    .html(d => d.text)
+                    .attrs({
+                        x: 0,
+                        dy: (d,i) => i*16
+                    })
+                    .styles({
+                        fill: d => d.weight == 400 ? '#444444':'',
+                        'font-weight': d => d.weight,
+                        'font-size': d => d.weight == 400 ? '12px':''
+                    });
 
-                // tspans.exit().remove();
+                tspans.exit().remove();
 
                 labels
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        x: function(d) {
-                            var val = x(d.value)-5;
-                            console.log(`lable update to x ${val}`);
-                        },
-                        y: function(d) {
-                            var val = y(d.rank)+5+((y(1)-y(0))/2)-8;
-                            console.log(`lable update to y ${val}`);
-                        }
-                        // x: d => x(d.value)-5,
-                        // y: d => y(d.rank)+5+((y(1)-y(0))/2)-8
-                        // transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
                     });
 
                 labels
@@ -261,17 +244,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        x: function(d) {
-                            var val = x(d.value)-8;
-                            console.log(`lable exit to x ${val}`);
-                        },
-                        y: function(d) {
-                            var val = y(top_n+1)+5;
-                            console.log(`lable exit to y ${val}`);
-                        }
-                        // x: d => x(d.value)-8,
-                        // y: d => y(top_n+1)+5
-                        // transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
+                        transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -341,6 +314,7 @@ export default function define(runtime, observer) {
     });
 
     main.variable(observer()).define(["html"], function(html) {
+        console.log("html observer");
         return(
             html`<style>
             text{
@@ -397,5 +371,6 @@ export default function define(runtime, observer) {
             )
     });
 
+    console.log("return main");
     return main;
 }
