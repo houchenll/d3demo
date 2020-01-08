@@ -14,17 +14,42 @@ export default function define(runtime, observer) {
 
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
         console.log(`chart observer, width ${width}, dataset is:`);
-        console.log(dataset);
 
         const height = 600;
+        const top_n = 10;
+        const month = 201912;
+
         const svg = d3.select(DOM.svg(width, height));
 
-        svg.append('text')
+        const margin = {
+            top: 80,
+            right: 0,
+            bottom: 5,
+            left: 0
+        };
+        let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
+
+        // 处理数据
+        dataset.forEach(d => {
+            d.value = +d.value,
+            d.value = isNaN(d.value) ? 0 : d.value,
+            d.month = +d.month,
+            d.colour = "#C8BDFF"
+        });
+        console.log(dataset);
+
+        let monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
+            .sort((a,b) => b.value - a.value)
+            .slice(0,top_n);
+        monthSlice.forEach((d,i) => d.rank = i);
+        console.log(monthSlice);
+
+        let title = svg.append('text')
             .attrs({
                 class: 'title',
                 y: 24
             })
-            .html('hello world');
+            .html('house price');
 
         return svg.node();
     });
