@@ -189,7 +189,9 @@ export default function define(runtime, observer) {
                     .append('text')
                     .attrs({
                         class: 'label',
-                        transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
+                        x: d => x(d.value)-5,
+                        y: d => y(top_n+1)+5+((y(1)-y(0))/2)-8,
+                        // transform: d => `translate(${x(d.value)-5}, ${y(top_n+1)+5+((y(1)-y(0))/2)-8})`,
                         'text-anchor': 'end'
                     })
                     .html('')
@@ -197,7 +199,9 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                        x: d => x(d.value)-5,
+                        y: d => y(d.rank)+5+((y(1)-y(0))/2)-8
+                        // transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
                     });
 
                 let tspans = labels.selectAll('tspan')
@@ -235,7 +239,9 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                        x: d => x(d.value)-5,
+                        y: d => y(d.rank)+5+((y(1)-y(0))/2)-8
+                        // transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
                     });
 
                 labels
@@ -244,7 +250,9 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
+                        x: d => x(d.value)-8,
+                        y: d => y(top_n+1)+5
+                        // transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -254,9 +262,9 @@ export default function define(runtime, observer) {
                     .enter()
                     .append('text')
                     .attrs({
-                      class: 'valueLabel',
-                      x: d => x(d.value)+5,
-                      y: d => y(top_n+1)+5,
+                        class: 'valueLabel',
+                        x: d => x(d.value)+5,
+                        y: d => y(top_n+1)+5,
                     })
                     .text(d => d3.format(',.0f')(d.lastValue))
                     .transition()
