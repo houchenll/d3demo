@@ -12,7 +12,7 @@ export default function define(runtime, observer) {
     main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
 
         const height = 600;
-        const top_n = 10;
+        const top_n = 15;
         const tickDuration = 500;
 
         // let month = 201101;
@@ -50,7 +50,7 @@ export default function define(runtime, observer) {
             .range([margin.left, width-margin.right-65]);
 
         let y = d3.scaleLinear()
-            .domain([top_n, 0])
+            .domain([top_n-5, 0])
             .range([height-margin.bottom, margin.top]);
 
         let colourScale = d3.scaleOrdinal()
