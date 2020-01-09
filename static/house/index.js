@@ -179,7 +179,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
+                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
