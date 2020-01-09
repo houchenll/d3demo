@@ -19,6 +19,7 @@ export default function define(runtime, observer) {
         let month = 201905;
         let start = 0;
         let endCount = 0;    // 最后一年匹配的数量
+        let finalFive = 0;
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -132,7 +133,7 @@ export default function define(runtime, observer) {
 
                 monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
                     .sort((a,b) => b.value - a.value)
-                    .slice(start, start + top_n);
+                    .slice(start + finalFive, start + top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
                 if (month > 201901) {
                     console.log(month, start, monthSlice);
@@ -301,9 +302,13 @@ export default function define(runtime, observer) {
                         endCount = data.length;
                     }
                     console.log(`month ${month}, start ${start}, endCount ${endCount}, top_n ${top_n}`);
-                    start = start + 1;
                     if (start + top_n > endCount) {
-                        ticker.stop();
+                        finalFive = finalFive + 1;
+                        if (finalFive > 5) {
+                            ticker.stop();
+                        }
+                    } else {
+                        start = start + 1;
                     }
                 } else {
                     var year = parseInt(month / 100);
