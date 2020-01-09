@@ -13,10 +13,10 @@ export default function define(runtime, observer) {
 
         const height = 600;
         const top_n = 15;
-        const tickDuration = 1500;
+        const tickDuration = 500;
 
-        // let month = 201101;
-        let month = 201905;
+        let month = 201101;
+        // let month = 201905;
         let start = 0;
         let endCount = 0;    // 最后一年匹配的数量
         let finalFive = 0;
