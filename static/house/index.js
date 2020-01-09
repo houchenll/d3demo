@@ -179,7 +179,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => y(0)-y(1)
+                        y: d => d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
@@ -245,7 +245,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, ${y(0)-y(1)})`
+                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? y(0)-y(1) : y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -289,7 +289,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => y(0)-y(1)
+                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
