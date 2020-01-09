@@ -20,6 +20,7 @@ export default function define(runtime, observer) {
         const tickDuration = 1000;
 
         let month = 201101;
+        let start = 0;
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -135,7 +136,7 @@ export default function define(runtime, observer) {
 
                 monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
                     .sort((a,b) => b.value - a.value)
-                    .slice(0,top_n);
+                    .slice(start,top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
 
                 x.domain([0, d3.max(monthSlice, d => d.value)]);
@@ -295,8 +296,16 @@ export default function define(runtime, observer) {
 
                 monthText.html(~~month);
 
-
-                if (month == 201912) ticker.stop();
+                if (month == 201912) {
+                    var count = dataset.filter(d => d.month == month && !isNaN(d.value))
+                                        .sort((a,b) => b.value - a.value);
+                    console.log(`month ${month}, start ${start}, count ${count}, top_n ${top_n}`);
+                    if (start + top_n > count) {
+                        ticker.stop();
+                    } else {
+                        start = start + 1;
+                    }
+                }
 
                 var year = parseInt(month / 100);
                 var mon = month % 100;
