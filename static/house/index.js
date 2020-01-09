@@ -24,9 +24,9 @@ export default function define(runtime, observer) {
         const svg = d3.select(DOM.svg(width, height));
 
         const margin = {
-            top: 80,
+            top: 0,
             right: 0,
-            bottom: 5,
+            bottom: 0,
             left: 0
         };
         let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
@@ -179,7 +179,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => -50
+                        y: d => y(0)-y(1)
                     })
                     .remove();
 
@@ -245,7 +245,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, -50)`
+                        transform: d => `translate(${x(d.value)-8}, ${y(0)-y(1)})`
                     })
                     .remove();
 
@@ -289,7 +289,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => -50
+                        y: d => y(0)-y(1)
                     })
                     .remove();
 
