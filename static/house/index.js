@@ -15,7 +15,8 @@ export default function define(runtime, observer) {
         const top_n = 10;
         const tickDuration = 500;
 
-        let month = 201101;
+        // let month = 201101;
+        let month = 201905;
         let start = 0;
 
         const svg = d3.select(DOM.svg(width, height));
@@ -125,6 +126,8 @@ export default function define(runtime, observer) {
         d3.timeout(_ => {
 
             let ticker = d3.interval(e => {
+
+                console.log('ticker timeout')
 
                 monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
                     .sort((a,b) => b.value - a.value)
@@ -293,8 +296,8 @@ export default function define(runtime, observer) {
                 monthText.html(~~month);
 
                 if (month == 201912) {
-                    var count = dataset.filter(d => d.month == month && !isNaN(d.value))
-                                        .sort((a,b) => b.value - a.value);
+                    var data = dataset.filter(d => d.month == month && !isNaN(d.value));
+                    var count = data.length;
                     console.log(`month ${month}, start ${start}, count ${count}, top_n ${top_n}`);
                     if (start + top_n > count) {
                         ticker.stop();
