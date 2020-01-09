@@ -135,8 +135,7 @@ export default function define(runtime, observer) {
                     .slice(start, start + top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
                 if (month > 201901) {
-                    console.log(month, start);
-                    console.log(monthSlice);
+                    console.log(month, start, monthSlice);
                 }
 
                 x.domain([0, d3.max(monthSlice, d => d.value)]);
@@ -179,7 +178,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5
+                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
@@ -245,7 +244,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5})`
+                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? y(0)-y(1) : y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -289,7 +288,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5
+                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
@@ -303,7 +302,7 @@ export default function define(runtime, observer) {
                     }
                     console.log(`month ${month}, start ${start}, endCount ${endCount}, top_n ${top_n}`);
                     start = start + 1;
-                    if (start + top_n > endCount - 1) {
+                    if (start + top_n > endCount) {
                         ticker.stop();
                     }
                 } else {
