@@ -305,15 +305,15 @@ export default function define(runtime, observer) {
                     } else {
                         start = start + 1;
                     }
-                }
-
-                var year = parseInt(month / 100);
-                var mon = month % 100;
-                if (mon == 12) {
-                    year = year + 1;
-                    month = year * 100 + 1;
                 } else {
-                    month = month + 1;
+                    var year = parseInt(month / 100);
+                    var mon = month % 100;
+                    if (mon == 12) {
+                        year = year + 1;
+                        month = year * 100 + 1;
+                    } else {
+                        month = month + 1;
+                    }
                 }
 
             }, tickDuration);
