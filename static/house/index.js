@@ -18,6 +18,7 @@ export default function define(runtime, observer) {
         // let month = 201101;
         let month = 201905;
         let start = 0;
+        let endCount = 0;    // 最后一年匹配的数量
 
         const svg = d3.select(DOM.svg(width, height));
 
@@ -131,7 +132,7 @@ export default function define(runtime, observer) {
 
                 monthSlice = dataset.filter(d => d.month == month && !isNaN(d.value))
                     .sort((a,b) => b.value - a.value)
-                    .slice(start,top_n);
+                    .slice(start, start + top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
                 if (month > 201901) {
                     console.log(month, start);
@@ -296,10 +297,12 @@ export default function define(runtime, observer) {
                 monthText.html(~~month);
 
                 if (month == 201912) {
-                    var data = dataset.filter(d => d.month == month && !isNaN(d.value));
-                    var count = data.length;
-                    console.log(`month ${month}, start ${start}, count ${count}, top_n ${top_n}`);
-                    if (start + top_n > count) {
+                    if (endCount == 0) {
+                        var data = dataset.filter(d => d.month == month && !isNaN(d.value));
+                        endCount = data.length;
+                    }
+                    console.log(`month ${month}, start ${start}, endCount ${endCount}, top_n ${top_n}`);
+                    if (start + top_n >= endCount - 1) {
                         ticker.stop();
                     } else {
                         start = start + 1;
