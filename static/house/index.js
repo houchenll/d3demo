@@ -179,7 +179,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => y(top_n+1)+5
+                        y: d => start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5
                     })
                     .remove();
 
@@ -245,7 +245,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
+                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -289,7 +289,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => y(top_n+1)+5
+                        y: d => start > 0 ? y(0)-y(1)-8 : y(top_n+1)+5
                     })
                     .remove();
 
@@ -302,10 +302,9 @@ export default function define(runtime, observer) {
                         endCount = data.length;
                     }
                     console.log(`month ${month}, start ${start}, endCount ${endCount}, top_n ${top_n}`);
-                    if (start + top_n >= endCount - 1) {
+                    start = start + 1;
+                    if (start + top_n > endCount - 1) {
                         ticker.stop();
-                    } else {
-                        start = start + 1;
                     }
                 } else {
                     var year = parseInt(month / 100);
