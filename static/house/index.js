@@ -179,7 +179,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => 0
+                        y: d => -50
                     })
                     .remove();
 
@@ -245,7 +245,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, 0)`
+                        transform: d => `translate(${x(d.value)-8}, -50)`
                     })
                     .remove();
 
@@ -289,7 +289,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => 0
+                        y: d => -50
                     })
                     .remove();
 
