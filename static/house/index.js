@@ -29,7 +29,6 @@ export default function define(runtime, observer) {
                 y: 24,
                 width: width
             })
-            .attr('text-anchor', 'middle')
             .html('中国大陆城市历年房价前十名');
 
         const margin = {
@@ -188,7 +187,7 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeLinear)
+                    .ease(d3.easeExpOut)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
                         y: d => y(top_n+1)+5
@@ -265,7 +264,7 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeLinear)
+                    .ease(d3.easeExpOut)
                     .attrs({
                         transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
@@ -317,7 +316,7 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeLinear)
+                    .ease(d3.easeExpOut)
                     .attrs({
                         x: d => x(d.value)+5,
                         y: d => y(top_n+1)+5
