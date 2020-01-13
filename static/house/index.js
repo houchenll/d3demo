@@ -23,10 +23,19 @@ export default function define(runtime, observer) {
 
         const svg = d3.select(DOM.svg(width, height));
 
+        let title = svg.append('text')
+            .attrs({
+                class: 'title',
+                y: 24,
+                width: width,
+                background-color: '#ffffff'
+            })
+            .html('中国大陆城市历年房价前十名');
+
         const margin = {
-            top: 0,
+            top: 80,
             right: 0,
-            bottom: 0,
+            bottom: 5,
             left: 0
         };
         let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
@@ -296,9 +305,20 @@ export default function define(runtime, observer) {
                     .remove();
 
 
-                monthText.html(~~month);
+                
 
                 if (month == 201912) {
+                    // 隐藏 月份
+                    svg.selectAll('.monthText')
+                        .transition()
+                        .duration(1000)
+                        .ease(d3.easeLinear)
+                        .styles({
+                            opacity: 0
+                        });
+                    // 修改标题
+                    title.html('2019年12月中国大陆320个地市房价排名');
+
                     if (endCount == 0) {
                         var data = dataset.filter(d => d.month == month && !isNaN(d.value));
                         endCount = data.length;
@@ -312,6 +332,8 @@ export default function define(runtime, observer) {
                         start = start + 1;
                     }
                 } else {
+                    monthText.html(~~month);
+
                     var year = parseInt(month / 100);
                     var mon = month % 100;
                     if (mon == 12) {
