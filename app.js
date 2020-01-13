@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const port = 3024;
+const port = 3025;
 
 const static = express.static('static');
 app.use(static);
