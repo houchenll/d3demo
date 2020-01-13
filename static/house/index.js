@@ -166,6 +166,9 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         y: d => y(d.rank)+5
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 bars
@@ -186,6 +189,9 @@ export default function define(runtime, observer) {
                         width: d => x(d.value)-x(0)-1,
                         y: d => y(top_n+1)+5
                     })
+                    .styles({
+                        opacity: 0
+                    })
                     .remove();
                 
 
@@ -205,6 +211,9 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 let tspans = labels.selectAll('tspan')
@@ -253,6 +262,9 @@ export default function define(runtime, observer) {
                     .attrs({
                         transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
+                    .styles({
+                        opacity: 0
+                    })
                     .remove();
 
                 let valueLabels = svg.selectAll('.valueLabel').data(monthSlice, d => d.name);
@@ -271,6 +283,9 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         y: d => y(d.rank)+5+((y(1)-y(0))/2)+1
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 valueLabels
@@ -296,6 +311,9 @@ export default function define(runtime, observer) {
                     .attrs({
                         x: d => x(d.value)+5,
                         y: d => y(top_n+1)+5
+                    })
+                    .styles({
+                        opacity: 0
                     })
                     .remove();
 
@@ -356,6 +374,9 @@ export default function define(runtime, observer) {
               font-size: 28px;
               font-weight: 600;
               background-color: #ffffff;
+              padding-top: 16px;
+              padding-bottom: 16px;
+              text-align: center;
             }
             text.subTitle{
               font-weight: 500;
