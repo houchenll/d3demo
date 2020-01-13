@@ -22,12 +22,12 @@ export default function define(runtime, observer) {
         let endCount = 0;    // 最后一年匹配的数量
         let finalFive = 0;
 
-        const svg = d3.select(DOM.svg(width, height)).attr('style', 'background-color:#eee;');;
+        const svg = d3.select(DOM.svg(width, height)).attr('style', 'border:1px solid #999;');;
 
         let title = svg.append('text')
             .attrs({
                 class: 'title',
-                x: 583,
+                x: 500,
                 y: 30,
                 width: width
             })
