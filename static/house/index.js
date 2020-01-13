@@ -26,7 +26,8 @@ export default function define(runtime, observer) {
         let title = svg.append('text')
             .attrs({
                 class: 'title',
-                y: 84,
+                x: 400,
+                y: 30,
                 width: width
             })
             .html('中国大陆城市历年房价前十名');
