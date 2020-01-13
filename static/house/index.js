@@ -373,10 +373,11 @@ export default function define(runtime, observer) {
             text.title{
               font-size: 28px;
               font-weight: 600;
-              background-color: #ffffff;
+              background-color: #bdbdbd;
               padding-top: 16px;
               padding-bottom: 16px;
               text-align: center;
+              display: block;
             }
             text.subTitle{
               font-weight: 500;
