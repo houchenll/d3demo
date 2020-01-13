@@ -135,9 +135,6 @@ export default function define(runtime, observer) {
                     .sort((a,b) => b.value - a.value)
                     .slice(start + finalFive, start + top_n);
                 monthSlice.forEach((d,i) => d.rank = i);
-                if (month > 201901) {
-                    console.log(month, start, monthSlice);
-                }
 
                 x.domain([0, d3.max(monthSlice, d => d.value)]);
 
@@ -179,7 +176,10 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
+                        y: function(d) {
+                            var endY = start > 0 ? y(0)-y(1) : y(top_n+1)+5;
+                            console.log(`start ${start}, endY ${endY}`);
+                        }
                     })
                     .remove();
 
@@ -301,7 +301,6 @@ export default function define(runtime, observer) {
                         var data = dataset.filter(d => d.month == month && !isNaN(d.value));
                         endCount = data.length;
                     }
-                    console.log(`month ${month}, start ${start}, endCount ${endCount}, top_n ${top_n}`);
                     if (start + top_n > endCount) {
                         finalFive = finalFive + 1;
                         if (finalFive > 5) {
