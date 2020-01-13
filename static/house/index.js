@@ -178,7 +178,7 @@ export default function define(runtime, observer) {
                         width: d => x(d.value)-x(0)-1,
                         y: function(d) {
                             var endY = start > 0 ? y(0)-y(1) : y(top_n+1)+5;
-                            console.log(`start ${start}, endY ${endY}`);
+                            console.log(`start ${start}, endY ${endY}, name ${d.name_zh}`);
                         }
                     })
                     .remove();
