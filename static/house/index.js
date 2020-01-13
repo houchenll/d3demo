@@ -27,8 +27,7 @@ export default function define(runtime, observer) {
             .attrs({
                 class: 'title',
                 y: 24,
-                width: width,
-                background-color: '#ffffff'
+                width: width
             })
             .html('中国大陆城市历年房价前十名');
 
@@ -360,6 +359,7 @@ export default function define(runtime, observer) {
             text.title{
               font-size: 28px;
               font-weight: 600;
+              background-color: #ffffff;
             }
             text.subTitle{
               font-weight: 500;
