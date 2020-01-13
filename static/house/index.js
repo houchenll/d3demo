@@ -9,10 +9,11 @@ export default function define(runtime, observer) {
         return(d3.csv('dataset.csv'))
     });
 
-    main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset", "width"], function(d3, DOM, dataset, width) {
+    main.variable(observer("chart")).define("chart", ["d3", "DOM", "dataset"], function(d3, DOM, dataset) {
 
-        const height = 600;
-        const top_n = 15;
+        const width = 1536;
+        const height = 864;
+        const top_n = 20;
         const tickDuration = 750;
 
         let month = 201101;
@@ -21,12 +22,12 @@ export default function define(runtime, observer) {
         let endCount = 0;    // 最后一年匹配的数量
         let finalFive = 0;
 
-        const svg = d3.select(DOM.svg(width, height));
+        const svg = d3.select(DOM.svg(width, height)).attr('fill', '#bbbbbb');
 
         let title = svg.append('text')
             .attrs({
                 class: 'title',
-                x: 400,
+                x: 583,
                 y: 30,
                 width: width
             })
