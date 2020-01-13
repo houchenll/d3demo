@@ -179,6 +179,9 @@ export default function define(runtime, observer) {
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
                         y: d => y(d.rank)+5
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 bars
@@ -253,6 +256,9 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         transform: d => `translate(${x(d.value)-5}, ${y(d.rank)+5+((y(1)-y(0))/2)-8})`
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 labels
@@ -302,6 +308,9 @@ export default function define(runtime, observer) {
                         return function(t) {
                             this.textContent = d3.format(',')(i(t));
                         };
+                    })
+                    .styles({
+                        opacity: 1
                     });
 
                 valueLabels
