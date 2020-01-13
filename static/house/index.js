@@ -29,6 +29,7 @@ export default function define(runtime, observer) {
                 y: 24,
                 width: width
             })
+            .attr('text-anchor', 'middle')
             .html('中国大陆城市历年房价前十名');
 
         const margin = {
@@ -373,11 +374,6 @@ export default function define(runtime, observer) {
             text.title{
               font-size: 28px;
               font-weight: 600;
-              background-color: #bdbdbd;
-              padding-top: 16px;
-              padding-bottom: 16px;
-              text-align: center;
-              display: block;
             }
             text.subTitle{
               font-weight: 500;
