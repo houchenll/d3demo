@@ -369,7 +369,7 @@ export default function define(runtime, observer) {
                 }
 
             }, tickDuration);
-        }, 20000);
+        }, 6000);
 
         return svg.node();
     });
