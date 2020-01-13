@@ -169,21 +169,20 @@ export default function define(runtime, observer) {
                         y: d => y(d.rank)+5
                     });
 
-                if (start == 0) {
-                    bars
+                bars
                     .exit()
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: d => y(top_n+1)+5
+                        y: function(d) {
+                            var endY = start > 0 ? 2*y(0)-y(1) : y(top_n+1)+5;
+                            console.log(`start ${start}, endY ${endY}, name ${d.name_zh}`);
+                            return endY;
+                        }
                     })
                     .remove();
-                } else {
-                    // 没有动画
-                    bars.exit().remove();
-                }
                 
 
                 let labels = svg.selectAll('.label').data(monthSlice, d => d.name);
@@ -248,7 +247,7 @@ export default function define(runtime, observer) {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
-                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? y(0)-y(1) : y(top_n+1)+5})`
+                        transform: d => `translate(${x(d.value)-8}, ${start > 0 ? 2*y(0)-y(1) : y(top_n+1)+5})`
                     })
                     .remove();
 
@@ -292,7 +291,7 @@ export default function define(runtime, observer) {
                     .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
-                        y: d => start > 0 ? y(0)-y(1) : y(top_n+1)+5
+                        y: d => start > 0 ? 2*y(0)-y(1) : y(top_n+1)+5
                     })
                     .remove();
 
