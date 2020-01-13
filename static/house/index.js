@@ -26,7 +26,7 @@ export default function define(runtime, observer) {
         let title = svg.append('text')
             .attrs({
                 class: 'title',
-                y: 24,
+                y: 84,
                 width: width
             })
             .html('中国大陆城市历年房价前十名');
@@ -192,9 +192,6 @@ export default function define(runtime, observer) {
                         width: d => x(d.value)-x(0)-1,
                         y: d => y(top_n+1)+5
                     })
-                    .transition()
-                    .duration(tickDuration)
-                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
@@ -271,9 +268,6 @@ export default function define(runtime, observer) {
                     .attrs({
                         transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
-                    .transition()
-                    .duration(tickDuration)
-                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
@@ -327,9 +321,6 @@ export default function define(runtime, observer) {
                         x: d => x(d.value)+5,
                         y: d => y(top_n+1)+5
                     })
-                    .transition()
-                    .duration(tickDuration)
-                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
