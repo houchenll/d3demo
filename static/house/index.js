@@ -169,20 +169,22 @@ export default function define(runtime, observer) {
                         y: d => y(d.rank)+5
                     });
 
-                bars
+                if (start == 0) {
+                    bars
                     .exit()
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
-                        y: function(d) {
-                            var endY = start > 0 ? y(0)-y(1) : y(top_n+1)+5;
-                            console.log(`start ${start}, endY ${endY}, name ${d.name_zh}`);
-                            return endY;
-                        }
+                        y: d => y(top_n+1)+5
                     })
                     .remove();
+                } else {
+                    // 没有动画
+                    bars.exit().remove();
+                }
+                
 
                 let labels = svg.selectAll('.label').data(monthSlice, d => d.name);
 
