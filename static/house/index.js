@@ -187,11 +187,14 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeExpOut)
+                    .ease(d3.easeLinear)
                     .attrs({
                         width: d => x(d.value)-x(0)-1,
                         y: d => y(top_n+1)+5
                     })
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
@@ -264,10 +267,13 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeExpOut)
+                    .ease(d3.easeLinear)
                     .attrs({
                         transform: d => `translate(${x(d.value)-8}, ${y(top_n+1)+5})`
                     })
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
@@ -316,11 +322,14 @@ export default function define(runtime, observer) {
                     .exit()
                     .transition()
                     .duration(tickDuration)
-                    .ease(d3.easeExpOut)
+                    .ease(d3.easeLinear)
                     .attrs({
                         x: d => x(d.value)+5,
                         y: d => y(top_n+1)+5
                     })
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeExpOut)
                     .styles({
                         opacity: 0
                     })
