@@ -179,6 +179,7 @@ export default function define(runtime, observer) {
                         y: function(d) {
                             var endY = start > 0 ? y(0)-y(1) : y(top_n+1)+5;
                             console.log(`start ${start}, endY ${endY}, name ${d.name_zh}`);
+                            return endY;
                         }
                     })
                     .remove();
