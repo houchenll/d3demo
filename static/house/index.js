@@ -153,7 +153,7 @@ export default function define(runtime, observer) {
         let markText = svg.append('text')
             .attrs({
               class: 'markText',
-              x: width-370,
+              x: width-200,
               y: height-35
             })
             .html('後塵出品');
