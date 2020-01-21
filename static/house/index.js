@@ -34,7 +34,7 @@ export default function define(runtime, observer) {
             .html('中国大陆城市历年房价前十五名');
 
         const margin = {
-            top: 40,
+            top: 70,
             right: 0,
             bottom: 5,
             left: 0
