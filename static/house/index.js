@@ -143,12 +143,20 @@ export default function define(runtime, observer) {
             .attrs({
               class: 'monthText',
               x: width-300,
-              y: height-35
+              y: height-75
             })
             // .styles({
             //   'text-anchor': 'end'
             // })
             .html(~~month);
+
+        let markText = svg.append('text')
+            .attrs({
+              class: 'markText',
+              x: width-370,
+              y: height-35
+            })
+            .html('後塵出品');
 
 
         // 循环查询数据
@@ -443,6 +451,11 @@ export default function define(runtime, observer) {
             text.monthText{
               font-size: 80px;
               font-weight: 700;
+              fill: #cccccc;
+            }
+            text.markText{
+              font-size: 24px;
+              font-weight: 400;
               fill: #cccccc;
             }
             text.yearIntro{
