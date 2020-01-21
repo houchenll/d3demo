@@ -32,29 +32,13 @@ export default function define(runtime, observer) {
                 })
                 .html('後塵出品');
 
-        title
-                .transition()
-                .duration(1000)
-                .ease(d3.easeLinear)
-                .styles({
-                    opacity: 1
-                });
-
-        name
-                .transition()
-                .duration(1000)
-                .ease(d3.easeLinear)
-                .styles({
-                    opacity: 1
-                });
-
         d3.timeout(_ => {
             title
                 .transition()
                 .duration(1000)
                 .ease(d3.easeLinear)
                 .styles({
-                    opacity: 0
+                    opacity: 1
                 });
 
             name
@@ -62,8 +46,26 @@ export default function define(runtime, observer) {
                 .duration(1000)
                 .ease(d3.easeLinear)
                 .styles({
-                    opacity: 0
+                    opacity: 1
                 });
+
+            d3.timeout(_ => {
+                title
+                    .transition()
+                    .duration(1000)
+                    .ease(d3.easeLinear)
+                    .styles({
+                        opacity: 0
+                    });
+
+                name
+                    .transition()
+                    .duration(1000)
+                    .ease(d3.easeLinear)
+                    .styles({
+                        opacity: 0
+                    });
+            }, 5000);
         }, 3000);
 
         return svg.node();
