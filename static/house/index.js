@@ -31,7 +31,7 @@ export default function define(runtime, observer) {
                 y: 30,
                 width: width
             })
-            .html('中国大陆城市历年房价前十名');
+            .html('中国大陆城市历年房价前十五名');
 
         const margin = {
             top: 40,
@@ -67,6 +67,23 @@ export default function define(runtime, observer) {
         let colourScale = d3.scaleOrdinal()
             .range(["#adb0ff", "#ffb3ff", "#90d595", "#e48381", "#aafbff", "#f7bb5f", "#eafb50"])
             .domain(["Huanan","Huazhong","Huadong","Xibei","Huabei","Xinan","Dongbei"]);
+
+
+        // 顶部横坐标
+        let xAxis = d3.axisTop()
+            .scale(x)
+            .ticks(width > 500 ? 5 : 2)    // 控制坐标划分成几格
+            .tickSize(-(height-margin.top-margin.bottom))    // 控制坐标的高度
+            .tickFormat(d => d3.format(',')(d));    // 格式化坐标数值，format第1个参数是格式，第2个参数是待格式化的数值
+
+        svg.append('g')
+            .attrs({
+              class: 'axis xAxis',
+              transform: `translate(0, ${margin.top})`
+            })
+            .call(xAxis)
+            .selectAll('.tick line')
+            .classed('origin', d => d == 0);
 
 
         // 绘制 bar
@@ -147,6 +164,12 @@ export default function define(runtime, observer) {
                 monthSlice.forEach((d,i) => d.rank = i);
 
                 x.domain([0, d3.max(monthSlice, d => d.value)]);
+
+                svg.select('.xAxis')
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .call(xAxis);
 
                 let bars = svg.selectAll('.bar').data(monthSlice, d => d.name);
 
