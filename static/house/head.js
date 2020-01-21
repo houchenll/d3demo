@@ -74,55 +74,16 @@ export default function define(runtime, observer) {
     main.variable(observer()).define(["html"], function(html) {
         return(
             html`<style>
-            text{
-              font-size: 16px;
-              font-family: Open Sans, sans-serif;
+            .title {
+                font-size: 40px;
+                font-weight: 800;
+                fill: #252729;
             }
-            text.title{
-              font-size: 28px;
-              font-weight: 600;
-            }
-            text.subTitle{
-              font-weight: 500;
-              fill: #777777;
-            }
-            text.label{
-              font-size: 18px;
-            }
-            .map-legend text{
-              font-size: 14px;
-              fill: #777777;
-            }
-            text.caption{
+
+            .name {
+              font-size: 24px;
               font-weight: 400;
-              font-size: 14px;
-              fill: #999999;
-            }
-            text.monthText{
-              font-size: 80px;
-              font-weight: 700;
-              fill: #cccccc;
-            }
-            text.yearIntro{
-              font-size: 48px;
-              font-weight: 700;
-              fill: #cccccc;
-            }
-            .tick text {
-              fill: #777777;
-            }
-            .xAxis .tick:nth-child(2) text {
-              text-anchor: start;
-            }
-            .tick line {
-              shape-rendering: CrispEdges;
-              stroke: #dddddd;
-            }
-            .tick line.origin{
-              stroke: #aaaaaa;
-            }
-            path.domain{
-              display: none;
+              fill: #757779;
             }
             </style>`
             )
