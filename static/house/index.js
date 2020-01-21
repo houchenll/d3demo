@@ -14,7 +14,7 @@ export default function define(runtime, observer) {
         const width = 1536;
         const height = 864;
         const top_n = 20;
-        const tickDuration = 750;
+        const tickDuration = 1000;
 
         let month = 201101;
         // let month = 201905;
@@ -352,44 +352,60 @@ export default function define(runtime, observer) {
                     .remove();
 
 
-                
+                monthText.html(~~month);
 
                 if (month == 201912) {
-                    // 隐藏 月份
-                    svg.selectAll('.monthText')
-                        .transition()
-                        .duration(1000)
-                        .ease(d3.easeLinear)
-                        .styles({
-                            opacity: 0
-                        });
-                    // 修改标题
-                    title.html('2019年12月中国大陆320个地市房价排名');
-
-                    if (endCount == 0) {
-                        var data = dataset.filter(d => d.month == month && !isNaN(d.value));
-                        endCount = data.length;
-                    }
-                    if (start + top_n > endCount) {
-                        finalFive = finalFive + 1;
-                        if (finalFive > 5) {
-                            ticker.stop();
-                        }
-                    } else {
-                        start = start + 1;
-                    }
-                } else {
-                    monthText.html(~~month);
-
-                    var year = parseInt(month / 100);
-                    var mon = month % 100;
-                    if (mon == 12) {
-                        year = year + 1;
-                        month = year * 100 + 1;
-                    } else {
-                        month = month + 1;
-                    }
+                    ticker.stop();
                 }
+
+                var year = parseInt(month / 100);
+                var mon = month % 100;
+                if (mon == 12) {
+                    year = year + 1;
+                    month = year * 100 + 1;
+                } else {
+                    month = month + 1;
+                }
+
+
+                
+
+                // if (month == 201912) {
+                //     // 隐藏 月份
+                //     svg.selectAll('.monthText')
+                //         .transition()
+                //         .duration(1000)
+                //         .ease(d3.easeLinear)
+                //         .styles({
+                //             opacity: 0
+                //         });
+                //     // 修改标题
+                //     title.html('2019年12月中国大陆320个地市房价排名');
+
+                //     if (endCount == 0) {
+                //         var data = dataset.filter(d => d.month == month && !isNaN(d.value));
+                //         endCount = data.length;
+                //     }
+                //     if (start + top_n > endCount) {
+                //         finalFive = finalFive + 1;
+                //         if (finalFive > 5) {
+                //             ticker.stop();
+                //         }
+                //     } else {
+                //         start = start + 1;
+                //     }
+                // } else {
+                //     monthText.html(~~month);
+
+                //     var year = parseInt(month / 100);
+                //     var mon = month % 100;
+                //     if (mon == 12) {
+                //         year = year + 1;
+                //         month = year * 100 + 1;
+                //     } else {
+                //         month = month + 1;
+                //     }
+                // }
 
             }, tickDuration);
         }, 6000);
