@@ -14,7 +14,7 @@ export default function define(runtime, observer) {
         const width = 1536;
         const height = 864;
         const top_n = 20;
-        const tickDuration = 1000;
+        const tickDuration = 555;
 
         let month = 201101;
         // let month = 201905;
