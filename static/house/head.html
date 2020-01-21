@@ -10,11 +10,13 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
 
-    <script type="text/javascript">
-        var svg = d3.select('body').append('svg')
-            .attr('width', 1536)
-            .attr('height', 864)
-            .attr('style', 'border:1px solid #999;');
+    <script type="module">
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "./head.js";
+
+        const runtime = new Runtime();
+        const main = runtime.module(define, Inspector.into(document.body));
+
     </script>
 
 </body>
