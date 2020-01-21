@@ -65,8 +65,8 @@ export default function define(runtime, observer) {
                     .styles({
                         opacity: 0
                     });
-            }, 5000);
-        }, 3000);
+            }, 3000);
+        }, 5000);
 
         return svg.node();
     });
